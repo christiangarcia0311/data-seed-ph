@@ -1,0 +1,32 @@
+# ---- Exclude files for this project
+# ---- @author: Christian G. Garcia
+
+.pypirc
+
+# Exclude tests folder
+tests/
+
+# Exclude data folder
+seed/providers/data/
+
+# Exclude data provider and exporter files
+seed/providers/data_provider.py
+seed/exports/exporter.py
+
+# Exclude build and dist folders
+build/
+dist/
+
+# Exclude MANIFEST file
+MANIFEST.in
+
+# Exclude virtual environment folders
+venv/
+env/
+.venv/
+
+# Exclude SH files
+*.sh
+
+# Exclude toml files
+*.toml
