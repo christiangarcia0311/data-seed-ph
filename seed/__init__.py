@@ -11,5 +11,5 @@ Information
 
 from .core import Dataset
 
-__version__ = '3.2.1'
+__version__ = '3.4.0'
 __all__ = ['Dataset']

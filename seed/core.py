@@ -34,6 +34,7 @@ from .providers.data_provider import (
 import pandas as pd
 import numpy as np
 import random as rd
+import os
 
     
 
@@ -89,6 +90,12 @@ class Dataset:
             'strand': lambda: self.data.education.strand()
         }
         
+    def _reset_providers(self):
+        self.data.personal = PersonalDataProvider()
+        self.data.address = AddressDataProvider()
+        self.data.contact = ContactDataProvider(self.data.personal)
+        self.data.education = EducationDataProvider()
+        
     def generate(self, rows: int, features: dict) -> pd.DataFrame:
         self.dump = {feature: [] for feature in features}
 
@@ -131,6 +138,33 @@ class Dataset:
                     raise ValueError('Feature values must be a tuple for numerical ranges or a list for categorical values.')
 
         return pd.DataFrame(self.dump)
+    
+    '''
+    v.3.4.2: [feat #1] Batch Generation with Variations
+    ----------------------------------------------------
+    '''
+    
+    def generate_batch(self, configurations: list) -> dict:
+        batch_results: dict = {}
+        
+        for index, config in enumerate(configurations):
+            
+            if not isinstance(config, dict): raise ValueError(f'Configuration at index {index} must be a dictionary format.')
+            if 'rows' not in config or 'features' not in config: raise ValueError(f'Configuration at index {index} must contain `features` keys and `rows`')
+            
+            batch_name = config.get('name', f'batch_{index + 1}')
+            
+            rows = config['rows']
+            features = config['features']  
+            
+            if not isinstance(rows, int) or rows <= 0: raise ValueError(f'Batch {batch_name} must be a postive integer.')
+            if not isinstance(features, dict) or not features: raise ValueError(f'Batch {batch_name}: features cannot be empty dictionary.')
+            
+            self._reset_providers()
+            
+            batch_results[batch_name] = self.generate(rows=rows, features=features)
+            
+        return batch_results
     
     def save(
         self, 
@@ -182,10 +216,27 @@ class Dataset:
                     raise ValueError(f'Unsupported database type: {database_type}')
             case _:
                 raise ValueError(f'Unsupported format: {format}')
-
-
-'''
-For future implementation
-
-@author: Christian G. Garcia
-'''
+    
+    def save_batch(
+        self, 
+        batch_data: dict, 
+        format: str, 
+        output_dir: str = './output', 
+        **kwargs
+    ):
+        os.makedirs(output_dir, exist_ok=True)
+        
+        for batch_name, data in batch_data.items():
+            filename = os.path.join(output_dir, batch_name)
+            
+            try:
+                self.save(
+                    data=data,
+                    filename=filename,
+                    format=format,
+                    **kwargs
+                )
+                
+                print(f'Batch {batch_name} successfully saved.')
+            except Exception as e:
+                print(f'Error saving batch {batch_name}: {e}')

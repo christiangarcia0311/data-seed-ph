@@ -34,6 +34,7 @@ Creating test data manually is time-consuming and error-prone. Data Seed PH   el
     - [Numeric Ranges](#numeric-ranges-tuples)
     - [Categorical Values](#categorical-values-lists)
     - [Parameterized Keywords](#parameterized-keywords)
+    - [Batch Generation [ New ]](#batch-generation)
 - [Export Formats](#export-formats)
     - [CSV Export](#csv-export)
     - [JSON Export](#json-export)
@@ -274,6 +275,83 @@ data = {
     'addr_barangay': 'barangay'  
 }
 ```
+
+> [!Note]
+> New feature added.
+
+## Batch Generation
+
+Generate multiple datasets with different configurations in a single operation. 
+
+### Usage
+
+Use `generate_batch()` to create multiple datasets at once:
+
+```python
+from seed import Dataset
+
+# create the data instance
+seed = Dataset()
+
+# define multiple dataset configurations
+configs = [
+    {
+        'name': 'customers',
+        'rows': 1000,
+        'features': {
+            'customer_id': (1111, 9999),
+            'full_name': 'fullname',
+            'email': 'email',
+            'mobile': 'mobile_int'
+        }
+    },
+    {
+        'name': 'orders',
+        'rows': 1000,
+        'features': {
+            'order_id': (000, 999),
+            'customer_id': (1111, 9999), 
+            'amount': (10000, 9000, 'float')
+        }
+    }
+]
+
+datasets = seed.generate_batch(configs)
+```
+
+### Configuration Format
+
+Each configuration in the list must be a dictionary with:
+
+| Parameter | Type | Required | Description |
+| :---: | :---: | :---: | :---: |
+| `name` | str | No | Identifier for the batch (defaults to `batch_1`, etc.) |
+| `rows` | int | Yes | Number of rows to generate (must be positive integer) |
+| `features` | dict | Yes | Feature definitions using any valid data generation types | 
+
+
+### Export Batch Results
+
+use `save_batch()` to export all generated datasets with a single call:
+
+```python
+# Save all batch to CSV
+seed.save_batch(datasets, format='csv', output_dir='./seed_data_csv')
+
+# Save all batch to JSON
+seed.save_batch(datasets, format='json', output_dir='./seed_data_json')
+
+# Save all batch to SQL (sqlite)
+seed.save_batch(
+    datasets, 
+    format='sql', 
+    output_dir='./seed_data_sql',
+    database_type='sqlite',
+    database_name='bul_data.db'
+)
+```
+
+The `save_batch()` method supports all export formats and automatically creates the output directory if needed.
 
 ## Export Formats
 
