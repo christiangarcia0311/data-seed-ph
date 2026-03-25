@@ -30,3 +30,6 @@ env/
 
 # Exclude toml files
 *.toml
+
+# Exclude cli features (soon to implement)
+cli.py

@@ -8,6 +8,7 @@
 ![Static Badge](https://img.shields.io/badge/Python-blue?style=flat&logo=python&logoColor=white)
 [![Last commit](https://img.shields.io/github/last-commit/christiangarcia0311/data-seed-ph?style=flat)](https://github.com/christiangarcia0311/data-seed-ph/commits/main)
 [![Latest release](https://img.shields.io/github/v/release/christiangarcia0311/data-seed-ph?style=flat)](https://github.com/christiangarcia0311/data-seed-ph/releases/latest)
+[![PyPI Downloads](https://static.pepy.tech/personalized-badge/data-seed-ph?period=total&units=NONE&style=flat&left_color=GRAY&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/data-seed-ph)
 
 
 **A Python library for generating realistic, synthetic Philippine-based datasets.**
