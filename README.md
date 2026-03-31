@@ -24,6 +24,7 @@ Creating test data manually is time-consuming and error-prone. Data Seed PH   el
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [CLI Feature [ New ]](#cli-feature)
 - [Core Concepts](#core-concepts)
 - [Features](#features)
     - [Personal Data](#1-personal-data)
@@ -81,6 +82,34 @@ seed_data = seed.generate(rows=1000, features=data)
 
 # export data to CSV, JSON or SQL
 seed.save(seed_data, 'output_example', 'csv')
+```
+
+> [!NOTE]
+> New added feature see [latest release](https://github.com/christiangarcia0311/data-seed-ph/releases/tag/v.3.4.9).
+
+### CLI Feature
+
+You can run the CLI and map generated feature data using the syntax `<column_name>:<feature_data>`.
+
+Syntax:
+
+- Basic: `<column_name>:<feature_data>` (example: `UserName:fullname`)
+- Parameterized: `<column_name>:<feature_data>:<parameter>` (example: `Address:province:Surigao Del Norte`)
+
+**Usage:**
+
+Generate 100 user data.
+
+Basic Usage:
+
+```sh
+seed generate --rows 100 --features "FirstName:firstname,LastName:lastname,UserEmail:email" --format csv --output users
+```
+
+Parameterized:
+
+```sh
+seed generate --rows 100 --features "FirstName:firstname,LastName:lastname,UserEmail:email,Address:province:Surigao Del Norte" --format csv --output users
 ```
 
 ### Core Concepts
