@@ -33,3 +33,6 @@ env/
 
 # Exclude cli features (soon to implement)
 cli.py
+
+# Exclude cache files
+__pycache__/

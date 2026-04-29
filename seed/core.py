@@ -28,7 +28,8 @@ from .providers.data_provider import (
     PersonalDataProvider,
     AddressDataProvider,
     ContactDataProvider,
-    EducationDataProvider
+    EducationDataProvider,
+    GeoDataProvider
 )
 
 import pandas as pd
@@ -45,6 +46,7 @@ class Data:
         self.address = AddressDataProvider()
         self.contact = ContactDataProvider(self.personal)
         self.education = EducationDataProvider()
+        self.geo = GeoDataProvider()
 
 class Dataset:
     
@@ -87,7 +89,18 @@ class Dataset:
             
             # Education data
             'course': lambda: self.data.education.course(),
-            'strand': lambda: self.data.education.strand()
+            'strand': lambda: self.data.education.strand(),
+            
+            # Geo data
+            'latitude': lambda: self.data.geo.coordinates()['latitude'],
+            'longitude': lambda: self.data.geo.coordinates()['longitude'],
+            'coordinates': lambda: self.data.geo.coordinates(),
+            'latitude:luzon': lambda: self.data.geo.coordinates('Luzon')['latitude'],
+            'latitude:visayas': lambda: self.data.geo.coordinates('Visayas')['latitude'],
+            'latitude:mindanao': lambda: self.data.geo.coordinates('Mindanao')['latitude'],
+            'longitude:luzon': lambda: self.data.geo.coordinates('Luzon')['longitude'],
+            'longitude:visayas': lambda: self.data.geo.coordinates('Visayas')['longitude'],
+            'longitude:mindanao': lambda: self.data.geo.coordinates('Mindanao')['longitude'],
         }
         
     def _reset_providers(self):
@@ -95,7 +108,7 @@ class Dataset:
         self.data.address = AddressDataProvider()
         self.data.contact = ContactDataProvider(self.data.personal)
         self.data.education = EducationDataProvider()
-        
+        self.data.geo = GeoDataProvider()
     def generate(self, rows: int, features: dict) -> pd.DataFrame:
         self.dump = {feature: [] for feature in features}
 
@@ -115,6 +128,12 @@ class Dataset:
                             self.dump[feature].append(self.data.address.city(param))
                         elif keyword == 'municipality':
                             self.dump[feature].append(self.data.address.municipality(param))
+                        elif keyword == 'latitude':
+                            coords = self.data.geo.coordinates(param)
+                            self.dump[feature].append(coords['latitude'])
+                        elif keyword == 'longitude':
+                            coords = self.data.geo.coordinates(param)
+                            self.dump[feature].append(coords['longitude'])
                         else:
                             raise ValueError(f'Unknown parameterized keyword: {keyword}')
 

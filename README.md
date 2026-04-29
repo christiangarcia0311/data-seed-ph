@@ -31,6 +31,7 @@ Creating test data manually is time-consuming and error-prone. Data Seed PH   el
     - [Address Data](#2-address-data)
     - [Contact Data](#3-contact-data)
     - [Education Data](#4-education-data)
+    - [Geo Data](#5-geo-data)
 - [Data Generation Types](#data-generation-types)
     - [String Keywords](#string-keywords)
     - [Numeric Ranges](#numeric-ranges-tuples)
@@ -247,6 +248,36 @@ data = {
     'shs_strand': 'strand',
     'college_course': 'course',
     'email': 'email'
+}
+
+seed_data = seed.generate(rows=500, features=data)
+```
+
+> [!Note]
+> New feature added - Geo Data coordinates for location-based applications.
+
+### **5. Geo Data**
+
+Generate Philippine geographical coordinates for mapping and location-based applications.
+
+| Keyword | Description | Example Output |
+| :--- | :---: | :---: | 
+| `latitude` | Random latitude within Philippines (random region) | 15.487045 |
+| `longitude` | Random longitude within Philippines (random region) | 120.974123 |
+| `coordinates` | Complete coordinates object with lat, long, and region | `{'latitude': 15.487045, 'longitude': 120.974123, 'region': 'Luzon'}` |
+| `latitude:luzon` | Latitude within Luzon region | 15.487045 |
+| `latitude:visayas` | Latitude within Visayas region | 10.812345 |
+| `latitude:mindanao` | Latitude within Mindanao region | 8.234567 |
+| `longitude:luzon` | Longitude within Luzon region | 120.974123 |
+| `longitude:visayas` | Longitude within Visayas region | 123.456789 |
+| `longitude:mindanao` | Longitude within Mindanao region | 125.123456 |
+
+**Example**
+
+```python
+data = {
+    'latitude': 'latitude',
+    'longitude': 'longitude'
 }
 
 seed_data = seed.generate(rows=500, features=data)
