@@ -24,7 +24,7 @@ Creating test data manually is time-consuming and error-prone. Data Seed PH   el
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
-- [CLI Feature [ New ]](#cli-feature)
+- [CLI Feature](#cli-feature)
 - [Core Concepts](#core-concepts)
 - [Features](#features)
     - [Personal Data](#1-personal-data)
@@ -37,7 +37,7 @@ Creating test data manually is time-consuming and error-prone. Data Seed PH   el
     - [Numeric Ranges](#numeric-ranges-tuples)
     - [Categorical Values](#categorical-values-lists)
     - [Parameterized Keywords](#parameterized-keywords)
-    - [Batch Generation [ New ]](#batch-generation)
+    - [Batch Generation](#batch-generation)
 - [Export Formats](#export-formats)
     - [CSV Export](#csv-export)
     - [JSON Export](#json-export)
@@ -52,7 +52,7 @@ Creating test data manually is time-consuming and error-prone. Data Seed PH   el
 
 ### Installation 
 
-Install via python package index [Pypi]().
+Install via python package index [Pypi](pypi.org/project/data-seed-ph/).
 
 ```bash
 pip install data-seed-ph
@@ -86,7 +86,7 @@ seed.save(seed_data, 'output_example', 'csv')
 ```
 
 > [!NOTE]
-> New added feature see [latest release](https://github.com/christiangarcia0311/data-seed-ph/releases/tag/v.3.4.9).
+> added CLI feature see [version release](https://github.com/christiangarcia0311/data-seed-ph/releases/tag/v.3.4.9).
 
 ### CLI Feature
 
@@ -338,7 +338,7 @@ data = {
 ```
 
 > [!Note]
-> New feature added.
+> added feature see [version release](https://github.com/christiangarcia0311/data-seed-ph/releases/tag/v.3.4.2).
 
 ## Batch Generation
 
